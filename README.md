@@ -1,4 +1,4 @@
-## tex-tracker
+# tex-tracker
 
 Package tracker for [Total Express](http://www.totalexpress.com.br).
 
@@ -12,7 +12,7 @@ I built a telegram bot to track my packages and notify me of changes in the trac
 
 Usei este código junto com um bot do telegram (ou qualquer outro serviço) para receber notificações quando o status do meu pacote mudar. Para isso, basta colocar cron job em seu servidor para ficar checando as informações em um determinado intervalo de tempo (recomendo algumas vezes por dia em algum minuto aleatório para não sobrecarregar o servidor deles).
 
-### Uso
+## Uso
 
 ```
 $code1 = 'fG9x0C2oWDtDOs0iQwI8hNUbF%2FghmEQnaMQ63nEXk4CCFnZhz5R2r1XEPqx0eoGWvERcPl4JsiUR4H%2BcvN0OiZkbXgXgVbMFtkbLCq788YTiBcNgwXhTtzKnlxFMLreGOkfLme46KTIMkLYxgyXXae%2BLTC0%3D';
