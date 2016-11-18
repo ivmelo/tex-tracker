@@ -20,6 +20,6 @@ $code2 = 'oBCrfkeLQ0Eyik8JfNwXUlgW9GsqpOiSsGdeZf2Jx42AnGBQ2HIZR61etYKoMt2rxD4BGj
 
 $tracker = new TEXTracker($code2);
 
-var_dump($tracker->track());
+print_r($tracker->track());
 
 // print $endpoint . $code2 . "\n";
