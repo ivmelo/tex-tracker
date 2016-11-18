@@ -1,0 +1,53 @@
+<?php
+
+require '../vendor/autoload.php';
+
+use Goutte\Client;
+
+/**
+ * Para conseguir o código do pacote siga os seguintes passos:
+ * 1 - Acesse http://tracking.totalexpress.com.br/tracking/0
+ * 2 - Preencha o form com os seus dados
+ * 3 - Clique no pacote que deseja rastrear
+ * 4 - Na url do rastreio, basta encontrar o conteudo após "?code="
+ *
+ * Below are some example codes.
+**/
+$code1 = 'fG9x0C2oWDtDOs0iQwI8hNUbF%2FghmEQnaMQ63nEXk4CCFnZhz5R2r1XEPqx0eoGWvERcPl4JsiUR4H%2BcvN0OiZkbXgXgVbMFtkbLCq788YTiBcNgwXhTtzKnlxFMLreGOkfLme46KTIMkLYxgyXXae%2BLTC0%3D';
+$code2 = 'oBCrfkeLQ0Eyik8JfNwXUlgW9GsqpOiSsGdeZf2Jx42AnGBQ2HIZR61etYKoMt2rxD4BGjWuWxA8r2INQ300ilOz1RJyn5T6dfTAgWm1OxLvVLKdlo29eTxDFNVlQ56gCmEm%2FqP%2Bi30OlWAiC0S8o8bh0aI%3D#n';
+
+$endpoint = 'http://tracking.totalexpress.com.br/tracking_encomenda.php?code=';
+
+$client = new Client;
+
+$crawler = $client->request('GET', $endpoint . $code1);
+
+// Package details.
+$data = [];
+
+$info = trim($crawler->filter('div[name="logo_total"]')->filter('b > font')->html());
+
+$info = explode('<br><b>', $info);
+
+$data['awb'] = substr($info[0], 11);
+$data['nota_fiscal'] = substr($info[1], 16);
+$data['pedido'] = substr($info[2], 11, -8);
+
+// Tracking info.
+$events = [];
+
+$tracking = $crawler->filter('#tabela1 > tr');
+
+for ($i=1; $i < $tracking->count(); $i++) {
+    $event = [
+        'data' => trim($tracking->eq($i)->filter('td')->eq(0)->text()),
+        'hora' => trim($tracking->eq($i)->filter('td')->eq(1)->text()),
+        'status' => trim($tracking->eq($i)->filter('td')->eq(2)->text()),
+    ];
+
+    array_push($events, $event);
+}
+
+$data['eventos'] = $events;
+
+var_dump($data);
